@@ -355,6 +355,33 @@ body{
   }
 }
 
+
+/* PHONE LAYOUT FIX */
+@media(max-width:900px){
+  .board{width:88vw;height:88vw;padding:4px;gap:2px;}
+  .center{padding:4px;gap:2px;border-radius:12px;}
+  .logo-ring{width:46px;height:46px;}
+  .title{font-size:9px;line-height:1.15;}
+  .score-bar{gap:2px;margin-top:0;}
+  .score-item{padding:1px 3px;font-size:6px;}
+  .dice-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;width:100%;}
+  .dice-col{padding:2px 1px;border-radius:6px;gap:1px;}
+  .dice-label{font-size:5px;line-height:1.05;}
+  .dice-face{font-size:15px;}
+  .roll-btn{padding:2px 0;font-size:5.5px;line-height:1;}
+  #turnInfo{font-size:6px;}
+  .cell-icon{font-size:11px;}
+  .cell-name{font-size:6.5px;}
+}
+@media(max-width:500px){
+  .board{width:86vw;height:86vw;}
+  .logo-ring{width:40px;height:40px;}
+  .title{font-size:8px;}
+  .dice-face{font-size:13px;}
+  .dice-label{font-size:4.5px;}
+  .roll-btn{font-size:5px;}
+}
+
 </style>
 </head>
 <body>
