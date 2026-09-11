@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>totee888</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:tahoma,'Segoe UI',sans-serif;}
@@ -212,6 +212,139 @@ body{
   .media-grid{grid-template-columns:1fr;}.place-image,.place-video{height:180px;}
   .title{font-size:18px;}.dice-grid{grid-template-columns:repeat(3,1fr);}
 }
+
+@media(max-width:600px){
+  body{
+    padding:6px;
+    align-items:flex-start;
+    -webkit-text-size-adjust:100%;
+  }
+
+  .container{
+    width:100%;
+    gap:10px;
+  }
+
+  .board{
+    width:98vw;
+    height:98vw;
+    max-width:none;
+    padding:5px;
+    gap:2px;
+    border-radius:18px;
+  }
+
+  .center{
+    padding:6px;
+    gap:3px;
+    border-radius:14px;
+  }
+
+  .logo-ring{
+    width:72px;
+    height:72px;
+  }
+
+  .title{
+    font-size:12px;
+    line-height:1.3;
+  }
+
+  .score-bar{
+    gap:2px;
+  }
+
+  .score-item{
+    padding:2px 4px;
+    font-size:7px;
+  }
+
+  .dice-grid{
+    grid-template-columns:repeat(3,1fr);
+    gap:3px;
+  }
+
+  .dice-col{
+    padding:3px 2px;
+    border-radius:8px;
+  }
+
+  .dice-label{
+    font-size:6.5px;
+  }
+
+  .dice-face{
+    font-size:24px;
+  }
+
+  .roll-btn{
+    padding:5px 1px;
+    font-size:8px;
+  }
+
+  #turnInfo{
+    font-size:8px;
+  }
+
+  .info{
+    width:98vw;
+    height:auto;
+    max-height:none;
+    padding:9px;
+    border-radius:18px;
+  }
+
+  .media-grid{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+
+  .place-image,
+  .place-video{
+    width:100%;
+    height:auto;
+    min-height:190px;
+    max-height:260px;
+    object-fit:contain;
+    background:#000;
+  }
+
+  #placeName{
+    font-size:18px;
+  }
+
+  #placeInfo{
+    font-size:12px;
+    line-height:1.7;
+  }
+
+  #quizOverlay{
+    padding:8px;
+  }
+
+  .ov-card{
+    max-height:96vh;
+    overflow:auto;
+    border-radius:18px;
+    padding:16px;
+  }
+
+  #ovQText{
+    font-size:16px;
+    line-height:1.6;
+  }
+
+  .ov-opt{
+    font-size:14px;
+    padding:11px 12px;
+  }
+
+  #startQuizBtn{
+    font-size:14px;
+    padding:11px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -273,7 +406,7 @@ body{
   <div class="info">
     <div class="media-grid">
       <img class="place-image" id="img1" src="" alt="">
-      <video class="place-video" id="video1" controls preload="metadata"></video>
+      <video class="place-video" id="video1" controls playsinline webkit-playsinline preload="metadata"></video>
       <img class="place-image" id="img2" src="" alt="">
     </div>
     <div id="catBadge" class="cat-badge"></div>
@@ -422,8 +555,20 @@ function showPlace(index) {
   document.getElementById("img1").src = p.images[0] || "";
   document.getElementById("img2").src = p.images[1] || "";
   const video = document.getElementById("video1");
-  video.pause(); video.src = p.video || "";
-  if (p.video) video.load();
+
+  // รองรับมือถือ Android / iPhone และ GitHub Pages
+  video.pause();
+  video.removeAttribute("src");
+  video.load();
+
+  if (p.video) {
+    // ใช้ URL อ้างอิงจากตำแหน่งไฟล์ HTML โดยตรง
+    // เช่น video1.mp4 ต้องอยู่โฟลเดอร์เดียวกับ index.html
+    video.src = new URL(p.video, document.baseURI).href;
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "");
+    video.load();
+  }
   document.getElementById("quizBox").style.display = "none";
 }
 
